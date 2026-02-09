@@ -1,4 +1,6 @@
 {% render 'partials/head.liquid', title: 'Squad page' %}
+<button id="A-Z">A-Z</button>
+<button id="M">M</button>
 
 <h2>Students</h2>
 <ul>
@@ -6,5 +8,4 @@
     <li><a href="/student/{{ person.id }}">{{ person.name }}</a></li>
   {% endfor %}
 </ul>
-
 {% render 'partials/foot.liquid', squads: squads %}

@@ -61,11 +61,19 @@ app.get('/', async function (request, response) {
 
     // Combineer meerdere filters
     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
+    'filter[squads][squad_id][cohort]': '2526'
+
     // Filter eventueel alleen op een bepaalde squad
     // 'filter[squads][squad_id][name]': '1I',
     // 'filter[squads][squad_id][name]': '1J',
-    'filter[squads][squad_id][cohort]': '2526'
+
+    // 'filter[name][_starts_with]': 'M'
   }
+
+   if (request.query['filter[name][_starts_with]']) {
+    params['filter[name][_starts_with]'] = request.query['filter[name][_starts_with]'];
+  }
+
   const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
 
   // En haal daarvan de JSON op
