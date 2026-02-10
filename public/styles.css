@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -12,6 +14,9 @@
     --color-text-primary: #000;
     --color-hover-background: #EFEFEF;
 
+    --border-radius-m: 14px;
+    --border-radius-s: 12px;
+
     --animation-duration: 0.2s;
 }
 
@@ -22,15 +27,60 @@ body {
 main {
     display: grid;
     grid-template-columns: max-content 1fr;
+    /* padding-inline: var(--spacing-xs); */
+    gap: var(--spacing-xs);
 
+    text-align: center;
+
+    @media (width > 400px) {
+        display: block;
+    }
 
     h1 {
         grid-column: span 2;
     }
 
     ul {
+        @media (width > 400px) {
+            
+            padding-inline: var(--spacing-xs);
+        }
+
+        &:nth-of-type(1) {
+            border-radius: var(--border-radius-s);
+            border: 1px solid var(--color-hover-background);
+            background-color: #fff;
+            height: 90vh;
+            overflow-y: scroll;
+            position: sticky;
+            top: 5vh;
+            scrollbar-width: none;
+
+
+            @media (width > 400px) {
+                display: flex;
+                /* justify-content: center; */
+                overflow-x: scroll;
+                
+
+                position: sticky;
+                top: 0;
+
+                height: auto;
+            }
+
+            li {
+                justify-self: center;
+            }
+        }
+
         li {
             list-style: none;
+
+            @media (width > 400px) {
+                justify-self: center;
+            }
+
 
             a {
                 text-decoration: none;
@@ -38,15 +88,16 @@ main {
                 padding: var(--spacing-s);
                 display: block;
                 border-radius: 12px;
+                width: max-content;
 
                 transition: all var(--animation-duration) ease;
-            
+
                 &.alfabet {
                     text-align: center;
                 }
 
                 &:hover {
-                    transform: translateX(var(--spacing-xs));
+                    /* transform: translateX(var(--spacing-xs)); */
                     background-color: var(--color-hover-background);
 
                     transition: all var(--animation-duration) ease;
