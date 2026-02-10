@@ -1,17 +1,17 @@
 {% render 'partials/head.liquid', title: 'Squad page' %}
 
-<a href="/">a-z</a>
+<ul>
+  <li><a href="/">A-Z</a></li>
+  {% for letter in alfabetArray%}
+    <li><a href="/{{ letter }}" class="alfabet">{{ letter | upcase}}</a></li>
+  {% endfor %}
+</ul>
 
-{% for letter in alfabetArray%}
-  <a href="/{{ letter }}">{{ letter }}</a>
-{% endfor %}
-
-
-<h2>Students</h2>
 <ul>
   {% for person in persons %}
     <li><a href="/student/{{ person.id }}">{{ person.name }}</a></li>
   {% endfor %}
 </ul>
+</main>
 
 {% render 'partials/foot.liquid', squads: squads %}
