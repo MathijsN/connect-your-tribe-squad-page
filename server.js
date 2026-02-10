@@ -86,7 +86,7 @@ app.get('/', async function (request, response) {
 
   // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
   // Geef ook de eerder opgehaalde squad data mee aan de view
-  response.render('index.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
+  response.render('index.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data, currentlyActive: 'a-z'})
 })
 
 
@@ -119,7 +119,7 @@ app.get('/namenmetm', async function (request, response) {
 
   // Render index.liquid uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
   // Geef ook de eerder opgehaalde squad data mee aan de view
-  response.render('index.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
+  response.render('namenmetm.liquid', {persons: personResponseJSON.data, squads: squadResponseJSON.data})
 })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen

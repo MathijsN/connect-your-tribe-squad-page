@@ -1,11 +1,1 @@
-{% render 'partials/head.liquid', title: 'Squad page' %}
-
-<a href="/">Terug</a>
-
-<h2>Students</h2>
-<ul>
-  {% for person in persons %}
-    <li><a href="/student/{{ person.id }}">{{ person.name }}</a></li>
-  {% endfor %}
-</ul>
-{% render 'partials/foot.liquid', squads: squads %}
+{% render 'index.liquid', persons: persons, squads: squads, currentlyActive: 'm' %}
