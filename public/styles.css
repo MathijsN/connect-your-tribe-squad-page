@@ -7,8 +7,12 @@
 :root {
     --spacing-m: 2rem;
     --spacing-s: 1rem;
+    --spacing-xs: 0.5rem;
 
     --color-text-primary: #000;
+    --color-hover-background: #EFEFEF;
+
+    --animation-duration: 0.2s;
 }
 
 body {
@@ -33,9 +37,19 @@ main {
                 color: var(--color-text-primary);
                 padding: var(--spacing-s);
                 display: block;
+                border-radius: 12px;
+
+                transition: all var(--animation-duration) ease;
             
                 &.alfabet {
                     text-align: center;
+                }
+
+                &:hover {
+                    transform: translateX(var(--spacing-xs));
+                    background-color: var(--color-hover-background);
+
+                    transition: all var(--animation-duration) ease;
                 }
             }
         }

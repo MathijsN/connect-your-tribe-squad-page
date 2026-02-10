@@ -69,9 +69,9 @@ app.get('/', async function (request, response) {
     // 'filter[name][_starts_with]': 'M'
   }
 
-  if (request.query['filter[name][_starts_with]']) {
-    params['filter[name][_starts_with]'] = request.query['filter[name][_starts_with]'];
-  }
+  // if (request.query['filter[name][_starts_with]']) {
+  //   params['filter[name][_starts_with]'] = request.query['filter[name][_starts_with]'];
+  // }
 
 
   const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
