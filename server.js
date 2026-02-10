@@ -46,9 +46,6 @@ app.set('views', './views')
 // Zorg dat werken met request data (volgende week) makkelijker wordt
 app.use(express.urlencoded({ extended: true }))
 
-
-const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
 // Om Views weer te geven, heb je Routes nodig
 // Maak een GET route voor de index
 app.get('/', async function (request, response) {
@@ -91,35 +88,28 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, currentlyActive: 'a-z', alfabetArray: alfabet })
 })
 
+const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-app.get('/a', async function (request, response) {
+alfabet.forEach((letter) => {
+  const capitalLetter = letter.toUpperCase()
+
+  app.get(`/${letter}`, async function (request, response) {
   const params = {
     'sort': 'name',
     'fields': '*,squads.*',
     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
     'filter[squads][squad_id][cohort]': '2526',
-    'filter[name][_starts_with]': 'A',
+    'filter[name][_starts_with]': `${capitalLetter}`,
   }
   const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
   const personResponseJSON = await personResponse.json()
 
-  response.render('a.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
+  response.render(`${letter}.liquid`, { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
 })
-app.get('/m', async function (request, response) {
-  const params = {
-    'sort': 'name',
-    'fields': '*,squads.*',
-    'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
-    'filter[squads][squad_id][cohort]': '2526',
-    'filter[name][_starts_with]': 'M',
-  }
-  const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
-  const personResponseJSON = await personResponse.json()
-  
-  response.render('m.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
 })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
+
 app.post('/', async function (request, response) {
   // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
   // Er is nog geen afhandeling van POST, redirect naar GET op /
