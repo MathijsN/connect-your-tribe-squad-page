@@ -94,24 +94,23 @@ main {
                 margin-top: var(--spacing-s);
             }
 
-            a {
-                &.person-list-item {
-                    display: flex;
-                    flex-direction: column;
-
+            @media (any-pointer: fine) {
+                &:hover {
                     img {
-                        display: none;
-                    }
-
-                    &:hover {
-                        img {
-                            display: block;
-                        }
+                        display: block;
+                        z-index: 1;
                     }
                 }
             }
         }
 
+        img {
+            display: none;
+
+            position: fixed;
+            bottom: var(--spacing-m);
+            left: var(--spacing-m);
+        }
 
         a {
             text-decoration: none;
@@ -127,12 +126,12 @@ main {
                 text-align: center;
             }
 
-            &:hover {
-                /* transform: translateX(var(--spacing-xs)); */
-                background-color: var(--color-favorite);
-                transition: all var(--animation-duration) ease;
+            @media (any-pointer: fine) {
+                &:hover {
+                    background-color: var(--color-favorite);
+                    transition: all var(--animation-duration) ease;
+                }
             }
         }
     }
-}
 }

@@ -12,9 +12,9 @@
    
     <li><a href="/student/{{ person.id }}" style="--color-favorite: {{ person.fav_color }}" class="person-list-item">
     {{ person.vibe_emoji }} {{ person.name }} {{ person.vibe_emoji }}
+    <img src="https://fdnd.directus.app/assets/{{ person.mugshot }}?width=400" alt="Profile picture">
     </a></li>
     
-    <img src="https://fdnd.directus.app/assets/{{ person.mugshot }}?width=200" alt="Profile picture">
   {% endfor %}
 
   {% if persons.length == 0 %}
