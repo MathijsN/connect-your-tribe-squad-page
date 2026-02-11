@@ -88,25 +88,26 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, currentlyActive: 'a-z', alfabetArray: alfabet })
 })
 
+
 const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-alfabet.forEach((letter) => {
-  const capitalLetter = letter.toUpperCase()
+// alfabet.forEach((letter) => {
+//   const capitalLetter = letter.toUpperCase()
 
-  app.get(`/${letter}`, async function (request, response) {
-  const params = {
-    'sort': 'name',
-    'fields': '*,squads.*',
-    'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
-    'filter[squads][squad_id][cohort]': '2526',
-    'filter[name][_starts_with]': `${capitalLetter}`,
-  }
-  const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
-  const personResponseJSON = await personResponse.json()
+//   app.get(`/${letter}`, async function (request, response) {
+//   const params = {
+//     'sort': 'name',
+//     'fields': '*,squads.*',
+//     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
+//     'filter[squads][squad_id][cohort]': '2526',
+//     'filter[name][_starts_with]': `${capitalLetter}`,
+//   }
+//   const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
+//   const personResponseJSON = await personResponse.json()
 
-  response.render(`${letter}.liquid`, { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
-})
-})
+//   response.render(`${letter}.liquid`, { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
+// })
+// })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
 
@@ -116,6 +117,24 @@ app.post('/', async function (request, response) {
   response.redirect(303, '/')
 })
 
+app.get('/a-z/:letter', async function (request, response) {
+  // console.log(request.params.letter)
+  const params = {
+    'sort': 'name',
+    'fields': '*,squads.*',
+    'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
+    'filter[squads][squad_id][cohort]': '2526',
+    'filter[name][_istarts_with]': `${request.params.letter}`,
+  }
+  // console.log('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params) )
+
+  const personDetailResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
+  const personDetailResponseJSON = await personDetailResponse.json()
+
+  // Render student.liquid uit de views map en geef de opgehaalde data mee als variable, genaamd person
+  // Geef ook de eerder opgehaalde squad data mee aan de view
+  response.render('index.liquid', { persons: personDetailResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
+})
 
 // Maak een GET route voor een detailpagina met een route parameter, id
 // Zie de documentatie van Express voor meer info: https://expressjs.com/en/guide/routing.html#route-parameters
@@ -127,7 +146,7 @@ app.get('/student/:id', async function (request, response) {
 
   // Render student.liquid uit de views map en geef de opgehaalde data mee als variable, genaamd person
   // Geef ook de eerder opgehaalde squad data mee aan de view
-  response.render('student.liquid', { person: personDetailResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
+  response.render('student.liquid', { person: personDetailResponseJSON.data, squads: squadResponseJSON.data })
 })
 
 

@@ -12,6 +12,7 @@
     --spacing-xs: 0.5rem;
 
     --color-text-primary: #000;
+    --color-text-secondary: #fff;
     --color-hover-background: #EFEFEF;
 
     --border-radius-m: 14px;
@@ -71,6 +72,13 @@ main {
 
             li {
                 justify-self: center;
+
+                a {
+                    
+                    &:hover {
+                        background-color: var(--color-hover-background);
+                    }
+                }
             }
         }
 
@@ -99,8 +107,7 @@ main {
 
             &:hover {
                 /* transform: translateX(var(--spacing-xs)); */
-                background-color: var(--color-hover-background);
-
+                background-color: var(--color-favorite);
                 transition: all var(--animation-duration) ease;
             }
         }
