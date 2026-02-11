@@ -2,16 +2,26 @@
 
 <ul>
   <li><a href="/">A-Z</a></li>
-  {% for letter in alfabetArray%}
+  {% for letter in alfabetArray %}
     <li><a href="/a-z/{{ letter }}" class="alfabet">{{ letter | upcase}}</a></li>
   {% endfor %}
-
 </ul>
 
 <ul>
   {% for person in persons %}
-    <li><a href="/student/{{ person.id }}" style="--color-favorite: {{ person.fav_color }}">{{ person.name }}</a></li>
+   
+    <li><a href="/student/{{ person.id }}" style="--color-favorite: {{ person.fav_color }}" class="person-list-item">
+    {{ person.vibe_emoji }} {{ person.name }} {{ person.vibe_emoji }}
+    </a></li>
+    
+    <img src="https://fdnd.directus.app/assets/{{ person.mugshot }}?width=200" alt="Profile picture">
   {% endfor %}
+
+  {% if persons.length == 0 %}
+    
+    <li class="error-message">😢 Er zijn geen studenten met deze letter 😢</li>
+
+  {% endif %}
 </ul>
 </main>
 

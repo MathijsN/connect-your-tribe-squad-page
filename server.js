@@ -46,6 +46,9 @@ app.set('views', './views')
 // Zorg dat werken met request data (volgende week) makkelijker wordt
 app.use(express.urlencoded({ extended: true }))
 
+
+const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
 // Om Views weer te geven, heb je Routes nodig
 // Maak een GET route voor de index
 app.get('/', async function (request, response) {
@@ -89,25 +92,6 @@ app.get('/', async function (request, response) {
 })
 
 
-const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-// alfabet.forEach((letter) => {
-//   const capitalLetter = letter.toUpperCase()
-
-//   app.get(`/${letter}`, async function (request, response) {
-//   const params = {
-//     'sort': 'name',
-//     'fields': '*,squads.*',
-//     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
-//     'filter[squads][squad_id][cohort]': '2526',
-//     'filter[name][_starts_with]': `${capitalLetter}`,
-//   }
-//   const personResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
-//   const personResponseJSON = await personResponse.json()
-
-//   response.render(`${letter}.liquid`, { persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
-// })
-// })
 
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
 
@@ -118,21 +102,18 @@ app.post('/', async function (request, response) {
 })
 
 app.get('/a-z/:letter', async function (request, response) {
-  // console.log(request.params.letter)
+
   const params = {
     'sort': 'name',
     'fields': '*,squads.*',
     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
     'filter[squads][squad_id][cohort]': '2526',
-    'filter[name][_istarts_with]': `${request.params.letter}`,
+    'filter[name][_istarts_with]': `${request.params.letter}`
   }
-  // console.log('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params) )
 
   const personDetailResponse = await fetch('https://fdnd.directus.app/items/person/?' + new URLSearchParams(params))
   const personDetailResponseJSON = await personDetailResponse.json()
 
-  // Render student.liquid uit de views map en geef de opgehaalde data mee als variable, genaamd person
-  // Geef ook de eerder opgehaalde squad data mee aan de view
   response.render('index.liquid', { persons: personDetailResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
 })
 

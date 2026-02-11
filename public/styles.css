@@ -74,7 +74,7 @@ main {
                 justify-self: center;
 
                 a {
-                    
+
                     &:hover {
                         background-color: var(--color-hover-background);
                     }
@@ -87,6 +87,28 @@ main {
 
             @media (width > 400px) {
                 justify-self: center;
+            }
+
+            &.error-message {
+                text-transform: uppercase;
+                margin-top: var(--spacing-s);
+            }
+
+            a {
+                &.person-list-item {
+                    display: flex;
+                    flex-direction: column;
+
+                    img {
+                        display: none;
+                    }
+
+                    &:hover {
+                        img {
+                            display: block;
+                        }
+                    }
+                }
             }
         }
 
