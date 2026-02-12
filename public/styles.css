@@ -37,6 +37,10 @@ main {
         display: block;
     }
 
+    form {
+        grid-column: span 2;
+    }
+
     h1 {
         grid-column: span 2;
     }

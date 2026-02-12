@@ -1,14 +1,11 @@
 {% render 'partials/head.liquid', title: 'Squad page' %}
 
-<ul>
-  <li>
-
-    <form action="/search" method="GET"> 
+<form action="/search" method="GET"> 
     <input type="text" name="q" placeholder="Search students..."> 
     <button type="submit">Search</button> 
-    </form>
+</form>
 
-  </li>
+<ul>
   <li><a href="/">A-Z</a></li>
   {% for letter in alfabetArray %}
     <li><a href="/a-z/{{ letter }}" class="alfabet">{{ letter | upcase}}</a></li>

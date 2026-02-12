@@ -124,12 +124,8 @@ app.get('/search', async function (request, response) {
   const personResponse = await fetch(`https://fdnd.directus.app/items/person?filter[name][_istarts_with]=${encodeURIComponent(q)}`)
   const personResponseJSON = await personResponse.json()
 
-  console.log(personResponseJSON.data)
-
   response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet });
 });
-
-
 
 
 
