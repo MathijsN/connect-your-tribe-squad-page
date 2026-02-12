@@ -121,7 +121,14 @@ app.get('/search', async function (request, response) {
 
   const q = request.query.q || "";
 
-  const personResponse = await fetch(`https://fdnd.directus.app/items/person?filter[name][_istarts_with]=${encodeURIComponent(q)}`)
+  const params = {
+    'sort': 'name',
+    'fields': '*,squads.*',
+    'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
+    'filter[squads][squad_id][cohort]': '2526',
+  }
+
+  const personResponse = await fetch(`https://fdnd.directus.app/items/person?filter[name][_istarts_with]=${encodeURIComponent(q)}&`+ new URLSearchParams(params))
   const personResponseJSON = await personResponse.json()
 
   response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet });
