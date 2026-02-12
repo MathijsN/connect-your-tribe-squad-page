@@ -107,6 +107,10 @@ main {
         img {
             display: none;
 
+            width: 350px;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            object-position: center;
             position: fixed;
             bottom: var(--spacing-m);
             left: var(--spacing-m);

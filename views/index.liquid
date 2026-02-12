@@ -1,6 +1,14 @@
 {% render 'partials/head.liquid', title: 'Squad page' %}
 
 <ul>
+  <li>
+
+    <form action="/search" method="GET"> 
+    <input type="text" name="q" placeholder="Search students..."> 
+    <button type="submit">Search</button> 
+    </form>
+
+  </li>
   <li><a href="/">A-Z</a></li>
   {% for letter in alfabetArray %}
     <li><a href="/a-z/{{ letter }}" class="alfabet">{{ letter | upcase}}</a></li>
@@ -12,7 +20,17 @@
    
     <li><a href="/student/{{ person.id }}" style="--color-favorite: {{ person.fav_color }}" class="person-list-item">
     {{ person.vibe_emoji }} {{ person.name }} {{ person.vibe_emoji }}
-    <img src="https://fdnd.directus.app/assets/{{ person.mugshot }}?width=400" alt="Profile picture">
+
+    {% if person.mugshot %}
+
+      <img src="https://fdnd.directus.app/assets/{{ person.mugshot }}?width=400" alt="Profile picture">
+
+    {% else %}
+
+      <img src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" alt="Profile picture">
+
+    {% endif %}
+
     </a></li>
     
   {% endfor %}

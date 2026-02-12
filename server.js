@@ -91,8 +91,6 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, currentlyActive: 'a-z', alfabetArray: alfabet })
 })
 
-
-
 // Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
 
 app.post('/', async function (request, response) {
@@ -116,6 +114,25 @@ app.get('/a-z/:letter', async function (request, response) {
 
   response.render('index.liquid', { persons: personDetailResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
 })
+
+
+
+app.get('/search', async function (request, response) {
+
+  const q = request.query.q || "";
+
+  const personResponse = await fetch(`https://fdnd.directus.app/items/person?filter[name][_istarts_with]=${encodeURIComponent(q)}`)
+  const personResponseJSON = await personResponse.json()
+
+  console.log(personResponseJSON.data)
+
+  response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet });
+});
+
+
+
+
+
 
 // Maak een GET route voor een detailpagina met een route parameter, id
 // Zie de documentatie van Express voor meer info: https://expressjs.com/en/guide/routing.html#route-parameters
