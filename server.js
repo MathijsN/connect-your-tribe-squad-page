@@ -49,8 +49,6 @@ app.use(express.urlencoded({ extended: true }))
 
 const alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-// Om Views weer te geven, heb je Routes nodig
-// Maak een GET route voor de index
 app.get('/', async function (request, response) {
 
   // Haal alle personen uit de WHOIS API op, van dit jaar, gesorteerd op naam
@@ -91,14 +89,6 @@ app.get('/', async function (request, response) {
   response.render('index.liquid', { persons: personResponseJSON.data, squads: squadResponseJSON.data, currentlyActive: 'a-z', alfabetArray: alfabet })
 })
 
-// Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
-
-app.post('/', async function (request, response) {
-  // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
-  // Er is nog geen afhandeling van POST, redirect naar GET op /
-  response.redirect(303, '/')
-})
-
 app.get('/a-z/:letter', async function (request, response) {
 
   const params = {
@@ -115,26 +105,37 @@ app.get('/a-z/:letter', async function (request, response) {
   response.render('index.liquid', { persons: personDetailResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet })
 })
 
-
-
 app.get('/search', async function (request, response) {
 
   // code geleerd van: https://copilot.microsoft.com/chats/ykLLVZKYx2nf9Q6MrYHzY
   const q = request.query.q || "";
+  const isSearch = !!request.query.q
+
+  console.log(q)
 
   const params = {
     'sort': 'name',
     'fields': '*,squads.*',
     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
     'filter[squads][squad_id][cohort]': '2526',
-    'filter[name][_istarts_with]': q
+    'filter[name][_icontains]': q,
+
   }
 
   const personResponse = await fetch(`https://fdnd.directus.app/items/person?`+ new URLSearchParams(params))
   const personResponseJSON = await personResponse.json()
 
-  response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet });
+  response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet, isSearch: isSearch });
 });
+
+
+// Maak een POST route voor de index; hiermee kun je bijvoorbeeld formulieren afvangen
+
+app.post('/', async function (request, response) {
+  // Je zou hier data kunnen opslaan, of veranderen, of wat je maar wilt
+  // Er is nog geen afhandeling van POST, redirect naar GET op /
+  response.redirect(303, '/')
+})
 
 
 
