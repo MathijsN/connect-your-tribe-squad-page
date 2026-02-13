@@ -119,6 +119,7 @@ app.get('/a-z/:letter', async function (request, response) {
 
 app.get('/search', async function (request, response) {
 
+  // code geleerd van: https://copilot.microsoft.com/chats/ykLLVZKYx2nf9Q6MrYHzY
   const q = request.query.q || "";
 
   const params = {
@@ -126,9 +127,10 @@ app.get('/search', async function (request, response) {
     'fields': '*,squads.*',
     'filter[squads][squad_id][tribe][name]': 'FDND Jaar 1',
     'filter[squads][squad_id][cohort]': '2526',
+    'filter[name][_istarts_with]': q
   }
 
-  const personResponse = await fetch(`https://fdnd.directus.app/items/person?filter[name][_istarts_with]=${encodeURIComponent(q)}&`+ new URLSearchParams(params))
+  const personResponse = await fetch(`https://fdnd.directus.app/items/person?`+ new URLSearchParams(params))
   const personResponseJSON = await personResponse.json()
 
   response.render('index.liquid', { query: q, persons: personResponseJSON.data, squads: squadResponseJSON.data, alfabetArray: alfabet });
